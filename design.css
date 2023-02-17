@@ -81,17 +81,87 @@
   /* CONTROL */
   .control {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-around;
     padding: 18px 0 8px 0;
   }
+
+  .control > div {
+    display: flex;
+  }
+
+  .vol-group {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    gap: 7px;
+    width: 100%;
+  }
+
+  .vol-group .icon-mute {
+    display: none;
+  }
+  
+  .vol-group.sounding .icon-mute {
+    display: inline-block;
+  }
+  
+  .vol-group.sounding .icon-volume {
+    display: none;
+  }
+
+  
+  .icon-volume {
+    font-size: 20px;
+    color:#666;
+  }
+
+  .icon-mute {
+    font-size: 20px;
+    color:#666;
+  }
+  .vol-group > .btn-volume::after {
+    content: "";
+    color: red;
+    position: absolute;
+    top: 0px;
+    left: 35px;
+    width: 30px;
+    height: 20px;
+  }
+
+
+.volume-progress {
+  display: none;
+  background-color: var(--primary-color);
+  position: relative;
+
+}
+
+.volume-progress:hover {
+  display: block;
+}
+
+  .btn-volume:hover + .volume-progress  {
+    display: block;
+  }
+  .icon-volume:hover {
+  color:black;
+  }
+  .icon-mute:hover {
+    color:black;
+    }
+
   
   .control .btn {
     color: #666;
     padding: 18px;
     font-size: 18px;
   }
-  
+  .control .btn:hover {
+    color: black;
+  }
   .control .btn.active {
     color: var(--primary-color);
   }
@@ -130,7 +200,7 @@
   
   /* PLAYLIST */
   .playlist {
-    margin-top: 408px;
+    margin-top: 420px;
     padding: 12px;
   }
   

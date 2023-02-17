@@ -24,17 +24,20 @@ const next = $('.btn-next');
 const prev = $('.btn-prev');
 const random = $('.btn-random');
 const repeat = $('.btn-repeat');
-
+const volume = $('.volume-progress');
+const volGroup = $('.vol-group');
+const btnVolume = $('.btn-volume');
 
 
 const app = {
   currentIndex: 0,
   isRandom: false,
   isRepeat: false,
+  isMute: false,
 
   songs: [
     {
-      name: "Huơng",
+      name: "Hương",
       singer: "Văn Mai Hương",
       path: "./music/Huong-VanMaiHuongNegav-6927340.mp3",
       image: "https://cdn.24h.com.vn/upload/4-2021/images/2021-10-25/Van-Mai-Huong-giam-can-van-giu-duoc-vong-1-248457741_563548201540098_6742713544667143635_n-1635130455-307-width1080height1349.jpg"
@@ -216,18 +219,46 @@ const app = {
       }
     }
 
+    volume.onchange = function() {
+      audio.volume = volume.value/100;
+    }
+
+    btnVolume.onclick = function() {
+      console.log(1);
+      app.isMute = !app.isMute;
+      if(app.isMute) {
+        volGroup.classList.add('sounding');
+        audio.volume = 0;
+        volume.value = 0;
+      } else {
+        volGroup.classList.remove('sounding');
+        audio.volume = 1;
+        volume.value = 100;
+      }
+    }
 
   },
+  songPlayedArray : [],
+
 
   playRandom:  function() {
     let newIndex;
+    if(this.songPlayedArray.length == this.songs.length) {
+      this.songPlayedArray = [];
+      newIndex = Math.floor(Math.random() * this.songs.length)
+      this.songPlayedArray.push(newIndex);
+      this.currentIndex = newIndex;
+      this.loadSong();
+    } else{
     do {
       newIndex = Math.floor(Math.random() * this.songs.length)
-    } while(newIndex == this.currentIndex);
-
+    } while(newIndex === this.currentIndex || this.songPlayedArray.includes(newIndex));
+    this.songPlayedArray.push(newIndex);
     this.currentIndex = newIndex;
     this.loadSong();
-  },
+    console.log(this.songPlayedArray);
+  }
+},
 
   loadSong: function() {
     if(this.songs.length === 0 ) {
